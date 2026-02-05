@@ -3,7 +3,6 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\LinkController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
 Route::apiResource('links', LinkController::class);
+Route::patch('links/{id}/archive', [LinkController::class, 'archive']);
