@@ -10,15 +10,9 @@ use Illuminate\Http\Request;
 class LinkController extends Controller
 {
      // GET: /api/links
-    public function index(Request $request)
+    public function index()
     {
-        $query = Link::query();
-
-        if ($request->category) {
-            $query->where('category', $request->category);
-        }
-
-        return response()->json($query->latest()->get(), 200);
+        return Link::all();
     }
     // POST: /api/links
     public function store(Request $request)
@@ -28,9 +22,9 @@ class LinkController extends Controller
                 $request->only(['title','url','category','note','status'])
             );
 
-            return response()->json($link, 201);
+            return response($link, 201);
         } catch (\Exception $e) {
-            return response()->json([
+            return response([
                 'error' => $e->getMessage()
             ], 500);
         }
@@ -42,7 +36,7 @@ class LinkController extends Controller
     {
         $link = Link::findOrFail($id);
 
-        return response()->json($link, 200);
+        return response($link, 200);
     }
 
     // PUT: /api/links/{id}
@@ -58,7 +52,7 @@ class LinkController extends Controller
 
         $link->update($request->all());
 
-        return response()->json([
+        return response([
             'message' => 'Bookmark updated successfully',
             'data' => $link
         ], 200);
@@ -70,7 +64,7 @@ class LinkController extends Controller
         $link = Link::findOrFail($id);
         $link->delete();
 
-        return response()->json([
+        return response([
             'message' => 'Bookmark deleted successfully'
         ], 200);
     }
@@ -81,7 +75,7 @@ class LinkController extends Controller
         $link = Link::findOrFail($id);
         $link->update(['status' => 'archived']);
 
-        return response()->json([
+        return response([
             'message' => 'Bookmark archived successfully'
         ], 200);
     }
