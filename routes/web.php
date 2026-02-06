@@ -6,4 +6,3 @@ use App\Http\Controllers\Api\LinkController;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::apiResource('links', LinkController::class);
